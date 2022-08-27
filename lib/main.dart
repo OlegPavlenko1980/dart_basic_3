@@ -82,8 +82,8 @@ class _MyHomePageState extends State<MyHomePage> {
                 for (var i = 0; i < data[tab_sel].length; i++)
                   Center(
                     child: Padding(
-                      padding: EdgeInsets.all(26.0),
-                      child: Text(data[tab_sel][i]),
+                      padding: EdgeInsets.all(10.0),
+                      child: Image.network((data[tab_sel][i]),
                     ),
                   ),
               ],
