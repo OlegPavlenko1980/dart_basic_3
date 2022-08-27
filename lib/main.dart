@@ -83,7 +83,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   Center(
                     child: Padding(
                       padding: EdgeInsets.all(10.0),
-                      child: Image.network((data[tab_sel][i]),
+                      child: Image.network(data[tab_sel][i]),
                     ),
                   ),
               ],
