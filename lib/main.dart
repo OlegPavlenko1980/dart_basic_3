@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:cached_network_image/cached_network_image.dart';
+//import 'package:cached_network_image/cached_network_image.dart';
 
 void main() {
   runApp(MyApp());
@@ -21,8 +21,7 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key}) : super(key: key);
-
+ 
   @override
   _MyHomePageState createState() => _MyHomePageState();
 }
@@ -71,15 +70,32 @@ class _MyHomePageState extends State<MyHomePage> {
                   padding: EdgeInsets.all(10),
                   height: 200,
                   width: 200,
-                  child: CachedNetworkImage(
+                  /*child: CachedNetworkImage(
                     imageUrl: data[name][index],
                     progressIndicatorBuilder:
                         (context, url, downloadProgress) =>
                             CircularProgressIndicator(
                                 value: downloadProgress.progress),
                     errorWidget: (context, url, error) => Icon(Icons.error),
-                  ),
-                );
+                  ),*/
+                   child: Image.network(
+                      data[name][index],
+                      loadingBuilder: (BuildContext context, Widget child,
+                          ImageChunkEvent? loadingProgress) {
+                        if (loadingProgress == null) {
+                          return child;
+                        }
+                        return Center(
+                          child: CircularProgressIndicator(
+                            value: loadingProgress.expectedTotalBytes != null
+                                ? loadingProgress.cumulativeBytesLoaded /
+                                    loadingProgress.expectedTotalBytes!
+                                : null,
+                          ),
+                        );
+                      },
+                    ),
+                  );
               },
             );
           }).toList(),
