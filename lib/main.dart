@@ -67,12 +67,18 @@ class _MyHomePageState extends State<MyHomePage> {
               itemCount: data[name].length,
               controller: ScrollController(),
               itemBuilder: (context, index) {
-                return CachedNetworkImage(
-                  imageUrl: data[name][index],
-                  progressIndicatorBuilder: (context, url, downloadProgress) =>
-                      CircularProgressIndicator(
-                          value: downloadProgress.progress),
-                  errorWidget: (context, url, error) => Icon(Icons.error),
+                return Container(
+                  padding: EdgeInsets.all(10),
+                  height: 200,
+                  width: 200,
+                  child: CachedNetworkImage(
+                    imageUrl: data[name][index],
+                    progressIndicatorBuilder:
+                        (context, url, downloadProgress) =>
+                            CircularProgressIndicator(
+                                value: downloadProgress.progress),
+                    errorWidget: (context, url, error) => Icon(Icons.error),
+                  ),
                 );
               },
             );
