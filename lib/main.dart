@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 void main() {
   runApp(MyApp());
@@ -27,33 +28,20 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  final List<String> nav = ['Список 1', 'Список 2'];
-  //final List fakeData = List.generate(100, (index) => index.toString());
-  String tab_sel = 'Мои фото';
+  final List<String> nav = ['Мои фото', 'Галерея'];
+
   Map<String, dynamic> data = {
     'Мои фото': [
-      'https://picsum.photos/1200/501',
-      'https://picsum.photos/1200/502',
-      'https://picsum.photos/1200/503',
-      'https://picsum.photos/1200/504',
-      'https://picsum.photos/1200/505',
-      'https://picsum.photos/1200/506',
-      'https://picsum.photos/1200/507',
-      'https://picsum.photos/1200/508',
-      'https://picsum.photos/1200/509',
-      'https://picsum.photos/1200/510',
+      'https://img.desktopwallpapers.ru/rocks/pics/wide/1920x1200/27640f370156a0e0ae3ee9608fc8480a.jpg',
+      'https://img.desktopwallpapers.ru/world/pics/wide/1920x1200/ec13dd5a2fb69efdb62c6b349de31e1f.jpg',
+      'https://img1.akspic.ru/attachments/crops/2/2/4/0/50422/50422-senokosnoye_ugodye-pole-selskoe_hozyajstvo-zakat-risovoe_pole-2560x1440.jpg',
+      'https://mobimg.b-cdn.net/v3/fetch/13/13fcae729f327cc0ba8e82dfda2291ea.jpeg'
     ],
     'Галерея': [
-      'https://picsum.photos/1200/511',
-      'https://picsum.photos/1200/512',
-      'https://picsum.photos/1200/513',
-      'https://picsum.photos/1200/514',
-      'https://picsum.photos/1200/515',
-      'https://picsum.photos/1200/516',
-      'https://picsum.photos/1200/517',
-      'https://picsum.photos/1200/518',
-      'https://picsum.photos/1200/519',
-      'https://picsum.photos/1200/520',
+      'https://img2.fonwall.ru/o/iw/4000x2500-beach-city.jpg?route=mid&amp;h=750',
+      'https://mobimg.b-cdn.net/v3/fetch/fc/fc97db329bd4482025eaa1e3961dc80e.jpeg',
+      'https://catherineasquithgallery.com/uploads/posts/2021-02/1612678074_74-p-kartinka-fon-zelenii-lug-125.jpg',
+      'https://img.fonwall.ru/o/63/zima-sneg-goryi-derevya.jpg?route=mid&amp;h=750'
     ]
   };
 
@@ -74,19 +62,16 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
         body: TabBarView(
           children: nav.map((name) {
-            if (name == 'Список 2') tab_sel = 'Галерея';
-            return ListView(
+            return ListView.builder(
+              itemCount: data[name].length,
               controller: ScrollController(),
-              key: PageStorageKey(name),
-              children: <Widget>[
-                for (var i = 0; i < data[tab_sel].length; i++)
-                  Center(
-                    child: Padding(
-                      padding: EdgeInsets.all(26.0),
-                      child: Text(data[tab_sel][i]),
-                    ),
-                  ),
-              ],
+              itemBuilder: (context, index) {
+                return CachedNetworkImage(
+                  placeholder: (context, url) =>
+                      const CircularProgressIndicator(),
+                  imageUrl: data[name][index],
+                );
+              },
             );
           }).toList(),
         ),
