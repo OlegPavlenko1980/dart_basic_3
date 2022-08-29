@@ -62,19 +62,19 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
         body: TabBarView(
           children: nav.map((name) {
-            if (name == 'Список 2') tab_sel = 'Галерея';
-            return ListView(
-              controller: ScrollController(),
+            return ListView.builder(
               key: PageStorageKey(name),
-              children: <Widget>[
-                for (var i = 0; i < data[tab_sel].length; i++)
-                  Center(
-                    child: Padding(
-                      padding: EdgeInsets.all(26.0),
-                      child: Text(data[tab_sel][i]),
-                    ),
-                  ),
-              ],
+              itemCount: data[name].length,
+              controller: ScrollController(),
+              itemBuilder: (context, index) {
+                return CachedNetworkImage(
+                  imageUrl: data[name][index],
+                  progressIndicatorBuilder: (context, url, downloadProgress) =>
+                      CircularProgressIndicator(
+                          value: downloadProgress.progress),
+                  errorWidget: (context, url, error) => Icon(Icons.error),
+                );
+              },
             );
           }).toList(),
         ),
